@@ -11,8 +11,8 @@ L_P = []
 S = []
 i = 0
 c = 0
-Buy = 61
-Sell = 61
+Buy = 31
+Sell = 31
 
 # read history
 f = open('Data.txt')
@@ -40,7 +40,6 @@ f.close()
 XBT, cash = Functions.calculate_Q()
 QBuy = 2
 QSell = 2
-print(A)
 r = requests.get('http://lauzhack.sqpub.ch/prices', stream=True)
 for chunk in r.iter_content(chunk_size=1024):
     current = chunk
@@ -50,10 +49,8 @@ for chunk in r.iter_content(chunk_size=1024):
     val = float(m.group(1))
     print(val)
     lowIndex = 2
-    print(A[int(lowIndex/2)])
-    L.append(val)
-    if i == Buy:
-        Functions.buyBitcoin(min(QBuy*(1+4*A[int(lowIndex/2)]),XBT))
+    if i == Buy and Buy < 28:
+        Functions.buyBitcoin(min(QBuy*(1+4*A[int(lowIndex/2)]),cash/val))
         print(A[int(lowIndex/2)])
         oldTotal = cash + XBT*val
         XBT, cash = Functions.calculate_Q()
@@ -61,8 +58,8 @@ for chunk in r.iter_content(chunk_size=1024):
         delta = total - oldTotal / oldTotal
         print(total)
         QBuy = (cash / 10) / val
-    if i == Sell:
-        Functions.sellBitcoin(max(QSell*(1+4*A[int(lowIndex/2)]),cash/val))
+    if i == Sell and Sell < 28:
+        Functions.sellBitcoin(min(QSell*(1+4*A[int(lowIndex/2)]),XBT))
         print(A[int(lowIndex/2)])
         oldTotal = cash + XBT*val
         XBT, cash = Functions.calculate_Q()

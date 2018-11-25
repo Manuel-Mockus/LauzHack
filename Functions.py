@@ -21,14 +21,14 @@ def buyBitcoin(x):
     x = str(x)
     data = 'BUY ' + x + ' BTC jmf784hkuhkufsd'
     info = requests.post('http://lauzhack.sqpub.ch', data=data)
-    print("BUYYY")
+    print("Bougth" + x + "BTC")
 
 
 def sellBitcoin(x):
     x = str(x)
     data = 'SELL ' + x + ' BTC jmf784hkuhkufsd'
     info = requests.post('http://lauzhack.sqpub.ch', data=data)
-    print("SELLL")
+    print("Sold"+ x + "BTC")
 
 
 def streamData():
